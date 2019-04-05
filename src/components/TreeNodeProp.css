@@ -1,0 +1,44 @@
+.tree-node-prop .expander,
+.tree-node-prop .prefix,
+.tree-node-prop .prop-key,
+.tree-node-prop .prop-value {
+  display: inline-block;
+}
+
+.tree-node-prop .prefix {
+  color: lightslategray;
+}
+
+.tree-node-prop .prop-key {
+  font-weight: bold;
+}
+
+.tree-node-prop .prop-value.null {
+  color: blue;
+}
+
+.tree-node-prop .prop-value.recursion {
+  color: red;
+}
+
+.tree-node-prop .prop-value.function {
+  background-color: beige;
+  color: darkblue;
+}
+
+.tree-node-prop .prop-value.number {
+  color: darkred;
+}
+
+.tree-node-prop .prop-value.string {
+  color: orange;
+}
+
+.tree-node-prop .expander {
+  width: 15px;
+  height: 15px;
+}
+
+.tree-node-prop .expander.collapsed {
+  transform: rotate(270deg) translateY(-2px);
+}
