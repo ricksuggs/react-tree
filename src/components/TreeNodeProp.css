@@ -3,6 +3,7 @@
 .tree-node-prop .prop-key,
 .tree-node-prop .prop-value {
   display: inline-block;
+  vertical-align: top;
 }
 
 .tree-node-prop .prefix {

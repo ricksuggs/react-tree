@@ -3,15 +3,14 @@ import {
   render,
   fireEvent,
   cleanup,
-  waitForElement
 } from "react-testing-library";
 import "jest-dom/extend-expect";
 import ObjectTreeNodeProp from "../components/ObjectTreeNodeProp";
 
 afterEach(cleanup);
 
-test("renders without crashing", () => {
-  const { getByText, getByTestId, container, asFragment } = render(
+test("responds to click events", () => {
+  const { getByText } = render(
     <ObjectTreeNodeProp
       prefix="anything"
       propKey="testKey"
@@ -21,9 +20,11 @@ test("renders without crashing", () => {
     />
   );
 
-  const prefixTextNode = waitForElement(() => {
-    getByTestId("anything");
-  });
+  const expanderNode = getByText("⏷");
 
-  expect(container.firstChild).toMatchSnapshot();
+  expect(expanderNode).toHaveAttribute("class", "expander collapsed");
+  fireEvent.click(expanderNode)
+  expect(expanderNode).toHaveAttribute("class", "expander ");
+  fireEvent.click(expanderNode);
+  expect(expanderNode).toHaveAttribute("class", "expander collapsed");
 });
