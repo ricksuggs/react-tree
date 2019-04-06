@@ -85,3 +85,5 @@ typings/
 
 README.txt
 Screenshot_20190318_215026.png
+
+src/__tests__/__snapshots__
