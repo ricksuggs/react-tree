@@ -67,7 +67,8 @@ function TreeNode({ data, level = 0, levelPrefix = "", collapsed = true }) {
       );
     } else {
       const valueClass = typeof data[propKey];
-      const propValue = data[propKey].toString().split("\n")[0];
+      let propValue = data[propKey].toString().split("\n")[0];
+      propValue = propValue.length > 25 ? propValue.substring(25) + '...' : propValue;
       return (
         <DefaultTreeNodeProp
           key={propKey}
