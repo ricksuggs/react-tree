@@ -3,87 +3,101 @@ import "./TreeNode.css";
 import DefaultTreeNodeProp from "./DefaultTreeNodeProp";
 import ObjectTreeNodeProp from "./ObjectTreeNodeProp";
 
-function TreeNode({ data, level = 0, levelPrefix = "", collapsed = true }) {
-  function renderNormalTreeNodeProp(propKey, data, level, levelPrefix) {
-    return renderTreeNodeProp(
-      propKey,
-      data,
-      level,
-      levelPrefix,
-      level ? "├─ " : "",
-      "│  "
-    );
-  }
-
-  function renderLastChildTreeNodeProp(propKey, data, level, levelPrefix) {
-    return renderTreeNodeProp(
-      propKey,
-      data,
-      level,
-      levelPrefix,
-      level ? "└─ " : "",
-      "   "
-    );
-  }
-
-  function renderTreeNodeProp(
+function renderNormalTreeNodeProp(propKey, data, level, levelPrefix) {
+  return renderTreeNodeProp(
     propKey,
     data,
     level,
     levelPrefix,
-    prefix,
-    levelAppend
-  ) {
-    if (!data[propKey]) {
-      return (
-        <DefaultTreeNodeProp
-          key={propKey}
-          prefix={levelPrefix + prefix}
-          propValue="null"
-          valueClass="null"
-          propKey={propKey}
-        />
-      );
-    } else if (data[propKey] === data) {
-      return (
-        <DefaultTreeNodeProp
-          key={propKey}
-          prefix={levelPrefix + prefix}
-          propValue="(RECURSION)"
-          valueClass="recursion"
-          propKey={propKey}
-        />
-      );
-    } else if (typeof data[propKey] === "object") {
-      return (
-        <ObjectTreeNodeProp
-          key={propKey}
-          prefix={levelPrefix + prefix}
-          propKey={propKey}
-          data={data}
-          level={level}
-          levelPrefix={level === 0 ? "" : levelPrefix + levelAppend}
-        />
-      );
-    } else {
-      const valueClass = typeof data[propKey];
-      let propValue = data[propKey].toString().split("\n")[0];
-      propValue =
-        propValue.length > 25 ? propValue.substring(0, 25) + "..." : propValue;
-      return (
-        <DefaultTreeNodeProp
-          key={propKey}
-          prefix={levelPrefix + prefix}
-          propValue={propValue}
-          valueClass={valueClass}
-          propKey={propKey}
-        />
-      );
-    }
-  }
+    level ? "├─ " : "",
+    "│  "
+  );
+}
 
+function renderLastChildTreeNodeProp(propKey, data, level, levelPrefix) {
+  return renderTreeNodeProp(
+    propKey,
+    data,
+    level,
+    levelPrefix,
+    level ? "└─ " : "",
+    "   "
+  );
+}
+
+function renderTreeNodeProp(
+  propKey,
+  data,
+  level,
+  levelPrefix,
+  prefix,
+  levelAppend
+) {
+  if (data[propKey] === null) {
+    return (
+      <DefaultTreeNodeProp
+        key={propKey}
+        prefix={levelPrefix + prefix}
+        propValue="null"
+        valueClass="null"
+        propKey={propKey}
+      />
+    );
+  } else if (typeof data[propKey] === "undefined") {
+    return (
+      <DefaultTreeNodeProp
+        key={propKey}
+        prefix={levelPrefix + prefix}
+        propValue="undefined"
+        valueClass="null"
+        propKey={propKey}
+      />
+    );
+  } else if (data[propKey] === data) {
+    return (
+      <DefaultTreeNodeProp
+        key={propKey}
+        prefix={levelPrefix + prefix}
+        propValue="(RECURSION)"
+        valueClass="recursion"
+        propKey={propKey}
+      />
+    );
+  } else if (typeof data[propKey] === "object") {
+    return (
+      <ObjectTreeNodeProp
+        key={propKey}
+        prefix={levelPrefix + prefix}
+        propKey={propKey}
+        data={data}
+        level={level}
+        levelPrefix={level === 0 ? "" : levelPrefix + levelAppend}
+      />
+    );
+  } else {
+    const valueClass = typeof data[propKey];
+    let propValue = data[propKey].toString().split("\n")[0];
+    propValue =
+      propValue.length > 25 ? propValue.substring(0, 25) + "..." : propValue;
+    return (
+      <DefaultTreeNodeProp
+        key={propKey}
+        prefix={levelPrefix + prefix}
+        propValue={propValue}
+        valueClass={valueClass}
+        propKey={propKey}
+      />
+    );
+  }
+}
+
+function TreeNode({ data, level = 0, levelPrefix = "", collapsed = true }) {
   let treeNodeProps = [];
-  let sortedPropKeys = Object.keys(data).sort();
+  let sortedPropKeys = [];
+  for (let key in data) {
+    sortedPropKeys.push(key);
+  }
+  sortedPropKeys.sort();
   if (sortedPropKeys.length) {
     for (let i = 0; i < sortedPropKeys.length - 1; i++) {
       treeNodeProps.push(
@@ -99,7 +113,11 @@ function TreeNode({ data, level = 0, levelPrefix = "", collapsed = true }) {
       )
     );
   }
-  return <div className={collapsed ? "collapsed" : ""}>{treeNodeProps}</div>;
+  if (collapsed) {
+    return null;
+  } else {
+    return <div>{treeNodeProps}</div>;
+  }
 }
 
 export default TreeNode;

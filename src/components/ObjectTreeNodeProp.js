@@ -12,7 +12,6 @@ function ObjectTreeNodeProp({ prefix, propKey, data, level, levelPrefix }) {
         className={"expander " + (collapsed ? "collapsed" : "")}
         onClick={() => setCollapsed(!collapsed)}
       >
-        ⏷
       </div>
       <div className="prop-key">{propKey}: </div>
       <div className="prop-value">{"{}"}</div>

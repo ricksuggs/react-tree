@@ -1,4 +1,5 @@
 .tree-node-prop .expander,
+.tree-node-prop .spacer,
 .tree-node-prop .prefix,
 .tree-node-prop .prop-key,
 .tree-node-prop .prop-value {
@@ -35,11 +36,25 @@
   color: orange;
 }
 
+.tree-node-prop .prop-value.boolean {
+  color: purple;
+}
+
+.tree-node-prop .spacer {
+  width: 10px;
+  height: 10px;
+}
+
 .tree-node-prop .expander {
-  width: 15px;
-  height: 15px;
+  width: 0px;
+  height: 0px;
+  border-top: 5px solid black;
+  border-left: 5px solid white;
+  border-right: 5px solid white;
+  border-bottom: 5px solid white;
+  transform:translateY(5px) translateX(-2px);
 }
 
 .tree-node-prop .expander.collapsed {
-  transform: rotate(270deg) translateY(-2px);
+  transform: rotate(270deg) translateY(-2px) translateX(-2px);
 }

@@ -10,7 +10,7 @@ import ObjectTreeNodeProp from "../components/ObjectTreeNodeProp";
 afterEach(cleanup);
 
 test("responds to click events", () => {
-  const { getByText } = render(
+  const {container  } = render(
     <ObjectTreeNodeProp
       prefix="anything"
       propKey="testKey"
@@ -20,7 +20,7 @@ test("responds to click events", () => {
     />
   );
 
-  const expanderNode = getByText("⏷");
+  const expanderNode = container.querySelector(".expander");
 
   expect(expanderNode).toHaveAttribute("class", "expander collapsed");
   fireEvent.click(expanderNode)
